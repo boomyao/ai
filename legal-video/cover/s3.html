@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>封面 哪一刻归你</title>
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-700.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/oswald/latin-500.css" />
+    <link rel="stylesheet" href="cover.css" />
+  </head>
+  <body>
+    <div id="c">
+      <svg width="1920" height="1200" viewBox="0 0 1920 1200" id="s">
+        <defs>
+          <radialGradient id="bg" cx="0.66" cy="0.5" r="0.85">
+            <stop offset="0" stop-color="#9aa8ff" />
+            <stop offset="0.5" stop-color="#5a5fe0" />
+            <stop offset="1" stop-color="#25206e" />
+          </radialGradient>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#120c40" flood-opacity="0.55" />
+          </filter>
+          <filter id="tshadow" x="-10%" y="-10%" width="120%" height="140%">
+            <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#120c40" flood-opacity="0.55" />
+          </filter>
+        </defs>
+        <rect width="1920" height="1200" fill="url(#bg)" />
+        <g id="rays" opacity="0.12"></g>
+        <g transform="translate(1290 150) rotate(-4) scale(1.0)" filter="url(#shadow)"><g id="bot"></g></g>
+        <!-- big question mark & peeking face -->
+        <text x="1480" y="420" font-family="Noto Serif SC" font-weight="900" font-size="300" fill="#ffd84d" stroke="#25206e" stroke-width="14" paint-order="stroke" transform="rotate(12 1560 300)">?</text>
+        <image href="assets/face_with_raised_eyebrow.png" x="1500" y="700" width="300" height="300" transform="rotate(-8 1650 850)" filter="url(#shadow)" />
+        <g filter="url(#tshadow)">
+          <text x="96" y="320" font-family="Noto Sans SC" font-weight="900" font-size="170" fill="#ffffff" stroke="#25206e" stroke-width="18" paint-order="stroke" stroke-linejoin="round">付了钱</text>
+          <text x="80" y="590" font-family="Noto Sans SC" font-weight="900" font-size="200" fill="#ffd84d" stroke="#25206e" stroke-width="22" paint-order="stroke" stroke-linejoin="round">水还不是</text>
+          <text x="80" y="820" font-family="Noto Sans SC" font-weight="900" font-size="200" fill="#ffd84d" stroke="#25206e" stroke-width="22" paint-order="stroke" stroke-linejoin="round">你的？</text>
+        </g>
+      </svg>
+      <canvas class="grain" width="1920" height="1200"></canvas>
+    </div>
+    <script src="bottle.js"></script>
+    <script>
+      const NS = 'http://www.w3.org/2000/svg';
+      document.getElementById('bot').innerHTML = bottle('h');
+      let sd = 17;
+      const r = () => ((sd = (sd * 16807) % 2147483647) / 2147483647);
+      const rays = document.getElementById('rays');
+      for (let i = 0; i < 24; i++) {
+        const a = (i / 24) * Math.PI * 2;
+        const a2 = a + 0.08;
+        const p = document.createElementNS(NS, 'polygon');
+        p.setAttribute('points', `1290,600 ${1290 + Math.cos(a) * 2200},${600 + Math.sin(a) * 2200} ${1290 + Math.cos(a2) * 2200},${600 + Math.sin(a2) * 2200}`);
+        p.setAttribute('fill', '#ffffff');
+        rays.append(p);
+      }
+      const cv = document.querySelector('.grain');
+      const ctx = cv.getContext('2d');
+      const img = ctx.createImageData(1920, 1200);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 128 + (r() - 0.5) * 36;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+        img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      const im = new Image();
+      im.onload = () => document.fonts.ready.then(() => (window.__ready = true));
+      im.src = 'assets/face_with_raised_eyebrow.png';
+    </script>
+  </body>
+</html>

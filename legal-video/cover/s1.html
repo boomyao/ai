@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>封面 蜗牛</title>
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-700.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/oswald/latin-500.css" />
+    <link rel="stylesheet" href="cover.css" />
+  </head>
+  <body>
+    <div id="c">
+      <svg width="1920" height="1200" viewBox="0 0 1920 1200" id="s">
+        <defs>
+          <radialGradient id="bg" cx="0.72" cy="0.45" r="0.9">
+            <stop offset="0" stop-color="#3fd0d4" />
+            <stop offset="0.45" stop-color="#108a9c" />
+            <stop offset="1" stop-color="#062a3a" />
+          </radialGradient>
+          <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#fffbe0" stop-opacity="0.75" />
+            <stop offset="1" stop-color="#fffbe0" stop-opacity="0" />
+          </radialGradient>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#00141c" flood-opacity="0.55" />
+          </filter>
+          <filter id="tshadow" x="-10%" y="-10%" width="120%" height="140%">
+            <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#002230" flood-opacity="0.6" />
+          </filter>
+          <linearGradient id="tint" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#1e88d0" stop-opacity="0.45" />
+            <stop offset="0.5" stop-color="#7fd0f5" stop-opacity="0.12" />
+            <stop offset="1" stop-color="#1e88d0" stop-opacity="0.45" />
+          </linearGradient>
+        </defs>
+        <rect width="1920" height="1200" fill="url(#bg)" />
+        <g id="rays" opacity="0.13"></g>
+        <ellipse cx="1360" cy="520" rx="560" ry="560" fill="url(#sun)" />
+        <!-- bottle, tilted, with the snail inside -->
+        <g transform="translate(1330 110) rotate(8) scale(1.08)" filter="url(#shadow)">
+          <g id="bot"></g>
+        </g>
+        <g id="bubbles"></g>
+        <!-- headline -->
+        <g filter="url(#tshadow)">
+          <text x="110" y="330" font-family="Noto Sans SC" font-weight="900" font-size="150" fill="#ffffff" stroke="#05303d" stroke-width="16" paint-order="stroke" stroke-linejoin="round">瓶子里</text>
+          <text x="96" y="600" font-family="Noto Sans SC" font-weight="900" font-size="250" fill="#ffd84d" stroke="#05303d" stroke-width="22" paint-order="stroke" stroke-linejoin="round">有只蜗牛</text>
+        </g>
+        <g transform="translate(110 690)">
+          <rect x="0" y="0" width="860" height="112" rx="56" fill="#05303d" opacity="0.88" />
+          <text x="50" y="76" font-family="Noto Sans SC" font-weight="700" font-size="60" fill="#ffffff" letter-spacing="2">它改变了全世界的法律</text>
+        </g>
+        <image href="assets/face_screaming_in_fear.png" x="1560" y="760" width="250" height="250" transform="rotate(10 1685 885)" />
+      </svg>
+      <canvas class="grain" width="1920" height="1200"></canvas>
+    </div>
+    <script src="bottle.js"></script>
+    <script>
+      const NS = 'http://www.w3.org/2000/svg';
+      // bottle body + snail inside, clipped to the bottle shape
+      const g = document.getElementById('bot');
+      g.innerHTML = bottle('h', { label: '饮用水' });
+      // insert the snail between the water and the label/highlights: place it inside the clip group
+      const clipG = g.querySelector('g[clip-path]');
+      const sn = document.createElementNS(NS, 'image');
+      sn.setAttribute('href', 'assets/snail.png');
+      sn.setAttribute('x', -175);
+      sn.setAttribute('y', 610);
+      sn.setAttribute('width', 330);
+      sn.setAttribute('height', 330);
+      sn.setAttribute('transform', 'rotate(-10 0 760)');
+      // put snail right after the water rects (index 2) so label & highlights stay on top
+      clipG.insertBefore(sn, clipG.children[3]);
+      const tint = document.createElementNS(NS, 'rect');
+      tint.setAttribute('x', -160);
+      tint.setAttribute('y', 610);
+      tint.setAttribute('width', 320);
+      tint.setAttribute('height', 320);
+      tint.setAttribute('fill', 'url(#tint)');
+      clipG.insertBefore(tint, sn.nextSibling);
+      // hide the label (it would cover the snail) — move label lower? keep it but higher up
+      let sd = 9;
+      const r = () => ((sd = (sd * 16807) % 2147483647) / 2147483647);
+      const rays = document.getElementById('rays');
+      for (let i = 0; i < 22; i++) {
+        const a = (i / 22) * Math.PI * 2;
+        const a2 = a + 0.07;
+        const p = document.createElementNS(NS, 'polygon');
+        p.setAttribute('points', `1360,520 ${1360 + Math.cos(a) * 2000},${520 + Math.sin(a) * 2000} ${1360 + Math.cos(a2) * 2000},${520 + Math.sin(a2) * 2000}`);
+        p.setAttribute('fill', '#ffffff');
+        rays.append(p);
+      }
+      const bb = document.getElementById('bubbles');
+      for (let i = 0; i < 18; i++) {
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', 1180 + r() * 420);
+        c.setAttribute('cy', 80 + r() * 260);
+        c.setAttribute('r', 5 + r() * 16);
+        c.setAttribute('fill', 'rgba(255,255,255,0.18)');
+        c.setAttribute('stroke', 'rgba(255,255,255,0.75)');
+        c.setAttribute('stroke-width', 2.5);
+        bb.append(c);
+      }
+      const cv = document.querySelector('.grain');
+      const ctx = cv.getContext('2d');
+      const img = ctx.createImageData(1920, 1200);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 128 + (r() - 0.5) * 40;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+        img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      const im = new Image();
+      im.onload = () => document.fonts.ready.then(() => (window.__ready = true));
+      im.src = 'assets/snail.png';
+    </script>
+  </body>
+</html>

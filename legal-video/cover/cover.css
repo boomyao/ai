@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'Smiley';
+  src: url('fonts/SmileySans-Oblique.ttf.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'DSEG7';
+  src: url('../node_modules/dseg/fonts/DSEG7-Classic/DSEG7Classic-Bold.woff2') format('woff2');
+  font-weight: 700;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  width: 1920px;
+  height: 1200px;
+  overflow: hidden;
+  background: #000;
+}
+#c {
+  position: relative;
+  width: 1920px;
+  height: 1200px;
+  overflow: hidden;
+  font-family: 'Noto Sans SC', sans-serif;
+  color: #fff;
+}
+#c > svg,
+#c > canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.abs {
+  position: absolute;
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}

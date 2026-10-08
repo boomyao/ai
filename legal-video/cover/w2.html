@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>封面 一瓶水 V2</title>
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-700.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/oswald/latin-500.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/oswald/latin-600.css" />
+    <link rel="stylesheet" href="cover.css" />
+    <style>
+      .t1 {
+        left: 0;
+        right: 0;
+        top: 44px;
+        text-align: center;
+        font-weight: 900;
+        font-size: 150px;
+        line-height: 1.1;
+        color: #fff;
+        text-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+      }
+      .t1 em {
+        font-style: normal;
+        color: #ffcc4d;
+      }
+      .lab {
+        font-weight: 900;
+        font-size: 64px;
+        color: #fff;
+        translate: -50% 0;
+        white-space: nowrap;
+        text-shadow: 0 6px 24px rgba(0, 0, 0, 0.8);
+      }
+      .ts {
+        font-family: 'Oswald';
+        font-weight: 600;
+        font-size: 40px;
+        color: #f0d08a;
+        translate: -50% 0;
+        letter-spacing: 2px;
+      }
+      .q {
+        font-family: 'Noto Serif SC';
+        font-weight: 900;
+        font-size: 300px;
+        color: #ff4b3a;
+        translate: -50% 0;
+        text-shadow: 0 0 40px rgba(255, 70, 50, 0.6);
+        line-height: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="c">
+      <svg width="1920" height="1200" viewBox="0 0 1920 1200" id="s">
+        <defs>
+          <radialGradient id="bgr" cx="0.5" cy="0.55" r="0.8">
+            <stop offset="0" stop-color="#1b2c48" />
+            <stop offset="0.5" stop-color="#0c1424" />
+            <stop offset="1" stop-color="#04060b" />
+          </radialGradient>
+          <filter id="bokeh" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14" /></filter>
+          <linearGradient id="laser" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ff2a2a" stop-opacity="0" />
+            <stop offset="0.2" stop-color="#ff2a2a" stop-opacity="0.9" />
+            <stop offset="0.8" stop-color="#ff2a2a" stop-opacity="0.9" />
+            <stop offset="1" stop-color="#ff2a2a" stop-opacity="0" />
+          </linearGradient>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffe9a8" stop-opacity="0.45" />
+            <stop offset="1" stop-color="#ffe9a8" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="1920" height="1200" fill="url(#bgr)" />
+        <g id="bokehs" filter="url(#bokeh)"></g>
+        <!-- timeline -->
+        <line x1="150" y1="960" x2="1780" y2="960" stroke="#f0d08a" stroke-width="5" />
+        <path d="M1780 945 L1812 960 L1780 975 Z" fill="#f0d08a" />
+        <g id="ticks"></g>
+        <ellipse cx="1480" cy="640" rx="300" ry="380" fill="url(#glow)" />
+        <g id="b1" transform="translate(440 410) scale(0.56)" opacity="0.55"></g>
+        <g id="b2" transform="translate(960 410) scale(0.56)" opacity="0.75"></g>
+        <g id="b3" transform="translate(1480 410) scale(0.56)"></g>
+        <rect x="860" y="640" width="200" height="6" fill="url(#laser)" />
+        <rect x="860" y="636" width="200" height="14" fill="url(#laser)" opacity="0.3" />
+      </svg>
+      <div class="abs t1">这瓶水，<em>哪一刻</em>归你？</div>
+      <div class="abs ts" style="left: 440px; top: 985px">0.0s</div>
+      <div class="abs ts" style="left: 960px; top: 985px">0.8s</div>
+      <div class="abs ts" style="left: 1480px; top: 985px">1.5s</div>
+      <div class="abs lab" style="left: 440px; top: 1040px">拿起</div>
+      <div class="abs lab" style="left: 960px; top: 1040px">扫码付钱</div>
+      <div class="abs lab" style="left: 1480px; top: 1040px">递到手上</div>
+      <canvas class="grain" width="1920" height="1200"></canvas>
+    </div>
+    <script src="bottle.js"></script>
+    <script>
+      const NS = 'http://www.w3.org/2000/svg';
+      document.getElementById('b1').innerHTML = bottle('a');
+      document.getElementById('b2').innerHTML = bottle('b');
+      document.getElementById('b3').innerHTML = bottle('c');
+      let sd = 33;
+      const r = () => ((sd = (sd * 16807) % 2147483647) / 2147483647);
+      const bk = document.getElementById('bokehs');
+      const cols = ['#ffcf7a', '#7fc4ff', '#ffffff', '#ff9d6b', '#9fe3c0'];
+      for (let i = 0; i < 30; i++) {
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', r() * 1920);
+        c.setAttribute('cy', 260 + r() * 600);
+        c.setAttribute('r', 18 + r() * 46);
+        c.setAttribute('fill', cols[Math.floor(r() * cols.length)]);
+        c.setAttribute('opacity', (0.05 + r() * 0.1).toFixed(3));
+        bk.append(c);
+      }
+      const ticks = document.getElementById('ticks');
+      for (const x of [440, 960, 1480]) {
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', x);
+        c.setAttribute('cy', 960);
+        c.setAttribute('r', 13);
+        c.setAttribute('fill', '#f0d08a');
+        ticks.append(c);
+      }
+      const cv = document.querySelector('.grain');
+      const ctx = cv.getContext('2d');
+      const img = ctx.createImageData(1920, 1200);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 128 + (r() - 0.5) * 70;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+        img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      document.fonts.ready.then(() => (window.__ready = true));
+    </script>
+  </body>
+</html>

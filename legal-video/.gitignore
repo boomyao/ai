@@ -8,3 +8,9 @@ frames/
 assets/sf2/*.sf2
 assets/asr/
 __pycache__/
+# downloaded third-party files (fonts, scraped covers, raw API dumps)
+cover/fonts/
+cover/assets/photos/
+research/bili/covers/
+research/bili/mustwatch.json
+research/bili/*.jpg

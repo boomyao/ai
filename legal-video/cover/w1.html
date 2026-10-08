@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>封面 一瓶水 V1</title>
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-700.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-500.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/bebas-neue/latin-400.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/oswald/latin-500.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/oswald/latin-600.css" />
+    <link rel="stylesheet" href="cover.css" />
+    <style>
+      .kicker {
+        left: 120px;
+        top: 96px;
+        font-weight: 700;
+        font-size: 66px;
+        color: #f0d08a;
+        letter-spacing: 4px;
+      }
+      .big {
+        left: 104px;
+        top: 236px;
+        display: flex;
+        align-items: flex-end;
+        line-height: 0.82;
+      }
+      .big .n {
+        font-family: 'Bebas Neue';
+        font-size: 620px;
+        color: #fff;
+        text-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      }
+      .big .u {
+        font-family: 'Noto Sans SC';
+        font-weight: 900;
+        font-size: 250px;
+        color: #fff;
+        margin-left: 10px;
+        margin-bottom: 30px;
+      }
+      .sub {
+        left: 112px;
+        top: 760px;
+        font-weight: 900;
+        font-size: 132px;
+        color: #fff;
+        letter-spacing: 2px;
+        text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      }
+      .sub em {
+        font-style: normal;
+        color: #f0c060;
+      }
+      .ann {
+        font-family: 'Noto Sans SC';
+        font-weight: 700;
+        font-size: 34px;
+        color: #eef4fb;
+        white-space: nowrap;
+        line-height: 1.15;
+      }
+      .ann b {
+        display: block;
+        font-family: 'Oswald';
+        font-weight: 600;
+        font-size: 28px;
+        letter-spacing: 2px;
+        color: #f0d08a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="c">
+      <svg width="1920" height="1200" viewBox="0 0 1920 1200" id="s">
+        <defs>
+          <radialGradient id="bgr" cx="0.68" cy="0.42" r="0.75">
+            <stop offset="0" stop-color="#1b2c48" />
+            <stop offset="0.45" stop-color="#0c1424" />
+            <stop offset="1" stop-color="#04060b" />
+          </radialGradient>
+          <linearGradient id="counter" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1a2232" />
+            <stop offset="1" stop-color="#06080d" />
+          </linearGradient>
+          <radialGradient id="caustic" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#eafcff" stop-opacity="0.95" />
+            <stop offset="0.35" stop-color="#7fd4ff" stop-opacity="0.45" />
+            <stop offset="1" stop-color="#2a8fe0" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="spot" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#9fd2ff" stop-opacity="0.22" />
+            <stop offset="1" stop-color="#9fd2ff" stop-opacity="0" />
+          </radialGradient>
+          <filter id="bokeh" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14" /></filter>
+          <filter id="b30" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30" /></filter>
+          <linearGradient id="reflFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="0.3" />
+            <stop offset="0.35" stop-color="#fff" stop-opacity="0" />
+          </linearGradient>
+          <mask id="reflMask"><rect x="0" y="1060" width="1920" height="300" fill="url(#reflFade)" /></mask>
+        </defs>
+        <rect width="1920" height="1200" fill="url(#bgr)" />
+        <g id="bokehs" filter="url(#bokeh)"></g>
+        <ellipse cx="1310" cy="560" rx="520" ry="520" fill="url(#spot)" />
+        <!-- counter -->
+        <rect x="0" y="1060" width="1920" height="140" fill="url(#counter)" />
+        <line x1="0" y1="1060" x2="1920" y2="1060" stroke="#2c3a52" stroke-width="2" />
+        <ellipse cx="1300" cy="1064" rx="165" ry="18" fill="#000" opacity="0.7" filter="url(#bokeh)" />
+        <ellipse cx="1405" cy="1083" rx="190" ry="20" fill="url(#caustic)" />
+        <!-- reflection -->
+        <g mask="url(#reflMask)">
+          <g id="refl" transform="translate(1300 2120) scale(1 -1)"></g>
+        </g>
+        <!-- bottle -->
+        <g id="hero" transform="translate(1300 160)"></g>
+        <!-- floating droplets (bullet time) -->
+        <g id="fly"></g>
+        <!-- shelf price tag -->
+        <g transform="translate(1520 952) rotate(2)">
+          <rect x="0" y="0" width="210" height="96" rx="8" fill="#ffd23f" />
+          <rect x="0" y="0" width="210" height="28" rx="8" fill="#e8402f" />
+          <text x="14" y="21" font-family="Noto Sans SC" font-weight="700" font-size="18" fill="#fff" letter-spacing="2">饮用水 550mL</text>
+          <text x="14" y="84" font-family="Oswald" font-weight="600" font-size="58" fill="#1b1b1b">¥2.00</text>
+        </g>
+        <!-- annotation leader lines -->
+        <g id="ann" stroke="rgba(240,208,138,0.85)" stroke-width="2.5" fill="none"></g>
+      </svg>
+      <div class="abs kicker">你买一瓶水的</div>
+      <div class="abs big"><span class="n">3</span><span class="u">秒</span></div>
+      <div class="abs sub">法律做了<em>5</em>件事</div>
+      <div id="labels"></div>
+      <canvas class="grain" width="1920" height="1200"></canvas>
+    </div>
+    <script src="bottle.js"></script>
+    <script>
+      const NS = 'http://www.w3.org/2000/svg';
+      document.getElementById('hero').innerHTML = bottle('h');
+      document.getElementById('refl').innerHTML = bottle('r', { drops: false });
+      let sd = 21;
+      const r = () => ((sd = (sd * 16807) % 2147483647) / 2147483647);
+      // store-light bokeh
+      const bk = document.getElementById('bokehs');
+      const cols = ['#ffcf7a', '#7fc4ff', '#ffffff', '#ff9d6b', '#9fe3c0'];
+      for (let i = 0; i < 26; i++) {
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', 760 + r() * 1180);
+        c.setAttribute('cy', 80 + r() * 640);
+        c.setAttribute('r', 18 + r() * 46);
+        c.setAttribute('fill', cols[Math.floor(r() * cols.length)]);
+        c.setAttribute('opacity', (0.05 + r() * 0.12).toFixed(3));
+        bk.append(c);
+      }
+      // droplets frozen in mid-air around the cap
+      const fly = document.getElementById('fly');
+      for (let i = 0; i < 16; i++) {
+        const a = -Math.PI / 2 + (r() - 0.5) * 2.4;
+        const d = 120 + r() * 220;
+        const x = 1300 + Math.cos(a) * d * 0.9;
+        const y = 210 + Math.sin(a) * d * 0.5;
+        const rad = 4 + r() * 13;
+        const g = document.createElementNS(NS, 'g');
+        g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(a * 57.3 + 90).toFixed(1)})`);
+        g.innerHTML = `<ellipse rx="${rad}" ry="${(rad * 1.25).toFixed(1)}" fill="url(#h-drop)"/>
+          <ellipse rx="${(rad * 0.3).toFixed(1)}" ry="${(rad * 0.22).toFixed(1)}" cx="${(-rad * 0.3).toFixed(1)}" cy="${(-rad * 0.45).toFixed(1)}" fill="#fff" opacity="0.95"/>`;
+        fly.append(g);
+      }
+      // annotations: [anchor x, y] → label position
+      const P = (x, y) => [1300 + x, 160 + y];
+      const anns = [
+        { a: P(62, 40), l: [1600, 150], t: '2.2s', k: '拧开：厂家负责' },
+        { a: P(86, 192), l: [1600, 310], t: '3.0s', k: '第一口：赔十倍' },
+        { a: P(150, 380), l: [1600, 470], t: '1.5s', k: '交付：归你' },
+        { a: P(150, 520), l: [1600, 630], t: '0.8s', k: '扫码：成交' },
+        { a: [1612, 958], l: [1600, 790], t: '0.0s', k: '价签：要约', up: true },
+      ];
+      const ann = document.getElementById('ann');
+      const labels = document.getElementById('labels');
+      for (const n of anns) {
+        const [ax, ay] = n.a;
+        const [lx, ly] = n.l;
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', n.up ? `M ${ax} ${ay} L ${ax} ${ly + 96}` : `M ${ax} ${ay} L ${lx - 40} ${ly + 22} L ${lx - 8} ${ly + 22}`);
+        ann.append(p);
+        const dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('cx', ax);
+        dot.setAttribute('cy', ay);
+        dot.setAttribute('r', 7);
+        dot.setAttribute('fill', '#f0d08a');
+        dot.setAttribute('stroke', 'none');
+        ann.append(dot);
+        const d = document.createElement('div');
+        d.className = 'abs ann';
+        d.style.left = lx + 'px';
+        d.style.top = ly - 6 + 'px';
+        d.innerHTML = `<b>${n.t}</b>${n.k}`;
+        labels.append(d);
+      }
+      // grain
+      const cv = document.querySelector('.grain');
+      const ctx = cv.getContext('2d');
+      const img = ctx.createImageData(1920, 1200);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 128 + (r() - 0.5) * 70;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+        img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      document.fonts.ready.then(() => (window.__ready = true));
+    </script>
+  </body>
+</html>

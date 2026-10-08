@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>封面 B</title>
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-700.css" />
+    <link rel="stylesheet" href="cover.css" />
+    <style>
+      .q {
+        left: 0;
+        right: 0;
+        top: 40px;
+        text-align: center;
+        font-family: 'Smiley';
+        font-size: 230px;
+        line-height: 1;
+        color: #fff;
+        text-shadow:
+          0 6px 0 rgba(0, 0, 0, 0.35),
+          0 0 80px rgba(255, 210, 120, 0.25);
+      }
+      .lbl {
+        font-family: 'Noto Sans SC';
+        font-weight: 900;
+        font-size: 78px;
+        line-height: 1;
+        text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+        white-space: nowrap;
+        translate: -50% 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="c">
+      <svg width="1920" height="1200" viewBox="0 0 1920 1200" id="s">
+        <defs>
+          <radialGradient id="bg" cx="0.5" cy="0.55" r="0.75">
+            <stop offset="0" stop-color="#1a2440" />
+            <stop offset="0.6" stop-color="#0a0f1c" />
+            <stop offset="1" stop-color="#040508" />
+          </radialGradient>
+          <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#6e5420" />
+            <stop offset="0.35" stop-color="#e9c877" />
+            <stop offset="0.5" stop-color="#fff0c2" />
+            <stop offset="0.65" stop-color="#d9b25e" />
+            <stop offset="1" stop-color="#5e461a" />
+          </linearGradient>
+          <linearGradient id="goldv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff0c2" />
+            <stop offset="0.4" stop-color="#e2bd69" />
+            <stop offset="1" stop-color="#6e5420" />
+          </linearGradient>
+          <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#fff6e0" stop-opacity="0.9" />
+            <stop offset="0.4" stop-color="#ffe2a8" stop-opacity="0.35" />
+            <stop offset="1" stop-color="#ffd27a" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="redhalo" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ff5a3c" stop-opacity="0.45" />
+            <stop offset="1" stop-color="#ff3b2f" stop-opacity="0" />
+          </radialGradient>
+          <filter id="b6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
+          <symbol id="man" viewBox="-50 -150 100 150">
+            <circle cx="0" cy="-122" r="24" />
+            <path d="M -40 0 L -40 -52 Q -40 -88 -10 -90 L 10 -90 Q 40 -88 40 -52 L 40 0 Z" />
+          </symbol>
+        </defs>
+        <rect width="1920" height="1200" fill="url(#bg)" />
+        <g id="rays" opacity="0.09"></g>
+        <!-- pillar & base -->
+        <rect x="944" y="420" width="32" height="560" fill="url(#gold)" />
+        <path d="M800 1050 L1120 1050 L1080 990 L840 990 Z" fill="url(#gold)" />
+        <rect x="770" y="1050" width="380" height="26" rx="6" fill="url(#goldv)" />
+        <circle cx="960" cy="420" r="34" fill="url(#goldv)" />
+        <circle cx="960" cy="420" r="12" fill="#5e461a" />
+        <g id="beam"></g>
+      </svg>
+      <div class="abs q">你选哪边？</div>
+      <div class="abs lbl" id="l1" style="color: #fff">1 个好人</div>
+      <div class="abs lbl" id="l2" style="color: #ff4a36">10 个坏人</div>
+      <canvas class="grain" width="1920" height="1200"></canvas>
+    </div>
+    <script>
+      const NS = 'http://www.w3.org/2000/svg';
+      const el = (t, a, p) => {
+        const e = document.createElementNS(NS, t);
+        for (const k in a) e.setAttribute(k, a[k]);
+        (p || document.getElementById('s')).append(e);
+        return e;
+      };
+      let sd = 11;
+      const r = () => ((sd = (sd * 16807) % 2147483647) / 2147483647);
+      // light rays behind the scale
+      const rays = document.getElementById('rays');
+      for (let i = 0; i < 18; i++) {
+        const a = -Math.PI / 2 + (i - 8.5) * 0.16;
+        const x2 = 960 + Math.cos(a) * 1400;
+        const y2 = 420 + Math.sin(a) * 1400;
+        const a2 = a + 0.05;
+        el('polygon', { points: `960,420 ${x2},${y2} ${960 + Math.cos(a2) * 1400},${420 + Math.sin(a2) * 1400}`, fill: '#ffe2a8' }, rays);
+      }
+      // beam tilted: left (one innocent) heavier → lower
+      const th = (10 * Math.PI) / 180;
+      const L = 600;
+      const cx = 960;
+      const cy = 420;
+      const ends = [
+        [cx - L * Math.cos(th), cy + L * Math.sin(th)],
+        [cx + L * Math.cos(th), cy - L * Math.sin(th)],
+      ];
+      const beam = document.getElementById('beam');
+      el('line', { x1: ends[0][0], y1: ends[0][1], x2: ends[1][0], y2: ends[1][1], stroke: 'url(#goldv)', 'stroke-width': 22, 'stroke-linecap': 'round' }, beam);
+      el('circle', { cx, cy, r: 26, fill: 'url(#goldv)' }, beam);
+      ends.forEach(([ex, ey], i) => {
+        el('circle', { cx: ex, cy: ey, r: 14, fill: 'url(#goldv)' }, beam);
+        const panY = ey + 260;
+        const w = 330;
+        // chains
+        for (const dx of [-w / 2 + 10, 0, w / 2 - 10]) el('line', { x1: ex, y1: ey, x2: ex + dx, y2: panY, stroke: '#d9b25e', 'stroke-width': 3, opacity: 0.85 }, beam);
+        // pan
+        el('path', { d: `M ${ex - w / 2} ${panY} Q ${ex} ${panY + 90} ${ex + w / 2} ${panY} Z`, fill: 'url(#gold)' }, beam);
+        el('path', { d: `M ${ex - w / 2} ${panY} L ${ex + w / 2} ${panY}`, stroke: '#fff0c2', 'stroke-width': 4 }, beam);
+        if (i === 0) {
+          el('circle', { cx: ex, cy: panY - 90, r: 190, fill: 'url(#halo)' }, beam);
+          const u = el('use', { href: '#man', x: ex - 80, y: panY - 236, width: 160, height: 240, fill: '#fffaf0' }, beam);
+          document.getElementById('l1').style.left = ex + 'px';
+          document.getElementById('l1').style.top = panY + 70 + 'px';
+        } else {
+          el('ellipse', { cx: ex, cy: panY - 50, rx: 220, ry: 120, fill: 'url(#redhalo)' }, beam);
+          // back row first (smaller, darker), then the front row
+          for (let k = 0; k < 5; k++) el('use', { href: '#man', x: ex - 150 + k * 60 + 30 - 26, y: panY - 128, width: 52, height: 80, fill: '#b8301f' }, beam);
+          for (let k = 0; k < 5; k++) el('use', { href: '#man', x: ex - 160 + k * 64 + 2, y: panY - 96, width: 60, height: 92, fill: '#f04634', stroke: '#2a0805', 'stroke-width': 1.5 }, beam);
+          document.getElementById('l2').style.left = ex + 'px';
+          document.getElementById('l2').style.top = panY + 70 + 'px';
+        }
+      });
+      // grain
+      const cv = document.querySelector('.grain');
+      const ctx = cv.getContext('2d');
+      const img = ctx.createImageData(1920, 1200);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 128 + (r() - 0.5) * 80;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+        img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      document.fonts.ready.then(() => (window.__ready = true));
+    </script>
+  </body>
+</html>
