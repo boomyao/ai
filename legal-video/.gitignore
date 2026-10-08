@@ -1,0 +1,10 @@
+node_modules/
+out/
+build/
+frames/
+*.wav
+*.mp3
+# large downloaded assets (fetched by setup steps, see README)
+assets/sf2/*.sf2
+assets/asr/
+__pycache__/

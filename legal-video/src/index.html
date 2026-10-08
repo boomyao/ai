@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>宁可错放</title>
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-400.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-500.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-600.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-700.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/chinese-simplified-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/latin-400.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/latin-600.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-serif-sc/latin-900.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-300.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-400.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-500.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/chinese-simplified-700.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/latin-300.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/latin-400.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/latin-500.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/noto-sans-sc/latin-700.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/ma-shan-zheng/chinese-simplified-400.css" />
+    <link rel="stylesheet" href="../node_modules/lxgw-wenkai-webfont/lxgwwenkai-regular.css" />
+    <link rel="stylesheet" href="../node_modules/lxgw-wenkai-webfont/lxgwwenkai-bold.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/eb-garamond/latin-400.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/eb-garamond/latin-400-italic.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource/eb-garamond/latin-500.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="stage">
+      <div id="bg"><canvas id="bgc" width="1920" height="1080"></canvas></div>
+      <div id="scenes"></div>
+      <div id="overlay"></div>
+      <canvas id="grain" width="1920" height="1080"></canvas>
+    </div>
+    <script>
+      window.addEventListener('error', e => console.error('[err]', e.message, e.filename + ':' + e.lineno));
+      window.addEventListener('unhandledrejection', e => console.error('[rej]', e.reason && (e.reason.stack || e.reason)));
+    </script>
+    <script src="../build/data.js"></script>
+    <script src="engine.js"></script>
+    <script src="components.js"></script>
+    <script src="art.js"></script>
+    <script src="background.js"></script>
+    <script src="subtitles.js"></script>
+    <script src="scenes/00-cold-parts.js"></script>
+    <script src="scenes/00-cold.js"></script>
+    <script src="scenes/01-errors.js"></script>
+    <script src="scenes/02-burden.js"></script>
+    <script src="scenes/03-confession.js"></script>
+    <script src="scenes/04-huugjilt.js"></script>
+    <script src="scenes/05-wall.js"></script>
+    <script>
+      (async () => {
+        const only = new URLSearchParams(location.search).get('only');
+        if (only) E.timeline = E.timeline.filter(sc => only.split(',').includes(sc.id));
+        E.finalize();
+        E.buildSubs();
+        await E.preloadFonts();
+        window.__total = E.total;
+        window.__cues = E.cues;
+        window.__subs = E.subsAll;
+        window.__chapters = E.chapters.map(c => ({ start: c.start, num: c.num, title: c.title }));
+        window.__scenes = E.timeline.map(sc => ({ id: sc.id, start: sc.start, dur: sc.dur }));
+        const q = new URLSearchParams(location.search);
+        E.seek(Number(q.get('t') || 0));
+        window.__ready = true;
+      })();
+    </script>
+  </body>
+</html>
